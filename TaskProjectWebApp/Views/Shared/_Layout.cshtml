@@ -1,0 +1,80 @@
+﻿@inject ICategoryService _categoryManager
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TaskProjectWebApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TaskProjectWebApp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="AddCategory">Kategori Ekle</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container" style="margin-top:30px">
+        <div class="row">
+            <div class="col-sm-3">
+                <p>Kategoriler</p>
+                @foreach (var item in _categoryManager.GetAll().Data)
+                {
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-route-searchText="" asp-controller="Product" asp-action="GetAllByCategoryId" asp-route-id="@item.Id">
+                                @item.Name
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </div>
+            <div class="col-sm-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - TaskProjectWebApp
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script src="~/lib/jquery-lang-js-3.0.0/js/jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var lang = new Lang();
+
+            lang.dynamic('tr', 'js/langpack/tr.json');
+
+            lang.init({
+                defaultLang: 'tr'
+            });
+        });
+    </script>
+</body>
+</html>
